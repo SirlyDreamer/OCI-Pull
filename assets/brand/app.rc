@@ -1,0 +1,2 @@
+// GPUI's Windows backend loads the application icon from resource ID 1.
+1 ICON "assets/brand/logo.ico"

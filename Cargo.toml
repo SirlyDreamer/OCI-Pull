@@ -1,0 +1,51 @@
+[package]
+name = "oci-pull"
+version = "0.1.0"
+edition = "2024"
+description = "A standalone container image downloader with a native GPUI desktop interface"
+license = "MIT"
+repository = "https://github.com/SirlyDreamer/OCI-Pull"
+rust-version = "1.98"
+default-run = "oci-pull"
+
+[features]
+default = ["gui"]
+gui = ["dep:gpui-kit"]
+
+[dependencies]
+anyhow = "1"
+bzip2 = "0.6.1"
+lzma-rust2 = { version = "0.22", default-features = false, features = ["std", "encoder", "xz"] }
+clap = { version = "4", features = ["derive"] }
+dirs = "6"
+flate2 = "1"
+futures-util = "0.3"
+gpui-kit = { version = "=0.6.1", optional = true }
+hex = "0.4"
+oci-client = { path = "vendor/oci-client", version = "0.18.0", default-features = false, features = ["native-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tar = "0.4"
+tempfile = "3"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "fs", "io-util", "time", "sync", "signal"] }
+tokio-util = "0.7"
+zstd = "0.13"
+
+[build-dependencies]
+embed-resource = "=3.0.12"
+
+[[bin]]
+name = "oci-pull-cli"
+path = "src/cli.rs"
+
+[[bin]]
+name = "oci-pull"
+path = "src/main.rs"
+required-features = ["gui"]
+
+[profile.dev]
+debug = 0
+
+[profile.release]
+strip = true
